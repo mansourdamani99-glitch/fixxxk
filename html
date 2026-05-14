@@ -2,12 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>الحقني - مساعدة الطريق للشاحنات والسيارات</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحقني | منصة المساعدة على الطريق</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,604 +17,577 @@
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #0A1172 0%, #0D47A1 50%, #1565C0 100%);
-            min-height: 100vh;
-            direction: rtl;
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
         }
 
-        /* شريط جانبي للمزيد */
-        .side-more {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 65px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
-            backdrop-filter: blur(8px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            z-index: 100;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 10px; }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-
-        .side-more:hover {
-            width: 80px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 100%);
-        }
-
-        .side-more i {
-            color: rgba(255,255,255,0.8);
-            font-size: 22px;
-        }
-
-        .side-more span {
-            color: rgba(255,255,255,0.8);
-            font-size: 13px;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            letter-spacing: 2px;
-        }
-
-        /* الأنيميشن للشاشة الرئيسية */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .animate-fade-up {
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        /* الشاشات */
-        .screen {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        /* البطاقات ثلاثية الأبعاد */
-        .card-3d {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .card-3d:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.3);
-        }
-
-        /* تنسيق عام للنصوص */
-        .text-right {
-            text-align: right;
-        }
-
-        /* الكرة القافزة */
-        .bouncing-ball {
-            animation: bounce 1.2s ease-in-out infinite;
-            cursor: pointer;
-        }
-
-        /* خلفية الصفحات الداخلية */
-        .page-gradient {
-            background: linear-gradient(135deg, #0A1172, #0D47A1);
-        }
-
-        /* شريط التنقل السفلي */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 20px;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            z-index: 90;
-        }
-
-        .bottom-nav.dark {
-            background: #1E1E1E;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
-            color: #777;
+            gap: 10px;
+            box-shadow: 0 4px 14px 0 rgba(30,58,138,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px 0 rgba(30,58,138,0.4);
+            background: linear-gradient(135deg, #172554, #2563eb);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #1e3a8a;
+            color: #1e3a8a;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
             cursor: pointer;
-            transition: all 0.2s;
+        }
+        .btn-outline:hover {
+            background: #1e3a8a;
+            color: white;
         }
 
-        .nav-item.active {
-            color: #1A237E;
+        /* Navbar */
+        .navbar {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-
-        .nav-item i {
-            font-size: 26px;
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
         }
-
-        .nav-item span {
-            font-size: 12px;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-
-        /* الوضع الليلي */
-        body.dark-mode {
-            background: #121212;
+        .logo i { font-size: 32px; color: #1e3a8a; }
+        .logo span { font-size: 26px; font-weight: 800; color: #0f172a; }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
         }
-
-        .dark-card {
-            background: #1E1E1E !important;
-            color: #eee;
-        }
-
-        /* تنسيقات إضافية */
-        .location-btn {
-            background: rgba(26,35,126,0.1);
-            border-radius: 12px;
-            padding: 8px;
-            cursor: pointer;
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 500;
             transition: 0.2s;
         }
-
-        .location-btn:hover {
-            background: rgba(26,35,126,0.2);
-        }
-
-        .toast-message {
-            position: fixed;
-            bottom: 80px;
-            left: 20px;
-            right: 20px;
-            background: #333;
-            color: white;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            z-index: 200;
-            animation: fadeInUp 0.3s ease;
+        .nav-links a:hover { color: #1e3a8a; }
+        .mobile-menu {
             display: none;
+            font-size: 28px;
+            cursor: pointer;
         }
 
-        @media (max-width: 600px) {
-            .side-more { width: 50px; }
-            .side-more:hover { width: 60px; }
-            .nav-item i { font-size: 22px; }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(120deg, #eef2ff 0%, #ffffff 100%);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+        .hero-badge {
+            background: #dbeafe;
+            color: #1e3a8a;
+            padding: 6px 16px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+        .hero-title span { color: #2563eb; }
+        .hero-desc {
+            color: #475569;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 40px;
+        }
+        .stat h3 { font-size: 28px; font-weight: 800; color: #1e3a8a; }
+        .stat p { color: #64748b; }
+        .hero-image img {
+            width: 100%;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+
+        /* Services Section */
+        .section {
+            padding: 80px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .section-sub {
+            text-align: center;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+        .service-card {
+            background: white;
+            border-radius: 28px;
+            padding: 32px;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+        }
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: #e0e7ff;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+        .service-icon i { font-size: 40px; color: #1e3a8a; }
+        .service-card h3 { font-size: 24px; margin-bottom: 12px; }
+        .service-card p { color: #64748b; line-height: 1.5; }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        .feature-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .feature-icon {
+            background: #1e3a8a10;
+            padding: 12px;
+            border-radius: 20px;
+        }
+        .feature-icon i { font-size: 28px; color: #1e3a8a; }
+
+        /* CTA */
+        .cta {
+            background: linear-gradient(110deg, #0f172a, #1e3a8a);
+            border-radius: 48px;
+            padding: 64px 48px;
+            text-align: center;
+            color: white;
+        }
+        .cta h2 { font-size: 32px; margin-bottom: 16px; }
+        .cta .btn-primary { background: white; color: #1e3a8a; box-shadow: none; margin-top: 24px; }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 48px 0 24px;
+            margin-top: 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-col h4 { color: white; margin-bottom: 20px; font-size: 18px; }
+        .footer-col a { display: block; color: #94a3b8; text-decoration: none; margin-bottom: 12px; transition: 0.2s; }
+        .footer-col a:hover { color: white; }
+        .copyright { text-align: center; padding-top: 24px; border-top: 1px solid #1e293b; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-stats { justify-content: center; }
+            .nav-links { display: none; }
+            .mobile-menu { display: block; }
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 24px;
+                box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+                gap: 20px;
+            }
+        }
+        @media (max-width: 640px) {
+            .hero-title { font-size: 32px; }
+            .section-title { font-size: 28px; }
+        }
+
+        /* Modal for request */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1100;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            max-width: 500px;
+            width: 90%;
+            padding: 32px;
+            position: relative;
+        }
+        .modal-content input, .modal-content textarea, .modal-content select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 16px;
+            margin: 12px 0;
+            font-family: inherit;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<!-- شريط جانبي للمزيد -->
-<div class="side-more" id="moreSideBtn">
-    <i class="fas fa-arrow-left"></i>
-    <span>المزيد</span>
-    <i class="fas fa-ellipsis-h"></i>
-</div>
-
-<!-- شاشة البداية (Splash) -->
-<div id="splashScreen" class="screen active">
-    <div style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px;">
-        <!-- أشكال متحركة -->
-        <div style="display: flex; gap: 20px; margin-bottom: 40px;">
-            <div class="shape-circle" style="width: 45px; height: 45px; background: rgba(255,255,255,0.15); border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); animation: pulse 2s infinite;"></div>
-            <div class="shape-square" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 10px; transform: rotate(0deg); animation: spin 3s infinite linear;"></div>
-            <div><i class="fas fa-star" style="color: rgba(255,255,255,0.5); font-size: 32px;"></i></div>
-        </div>
-
-        <!-- شعار شاحنة -->
-        <div style="background: white; border-radius: 100px; padding: 25px; box-shadow: 0 0 40px rgba(13,71,161,0.5); margin-bottom: 40px; animation: bounce 2s ease-in-out infinite;">
-            <i class="fas fa-truck" style="font-size: 85px; color: #0D47A1;"></i>
-        </div>
-
-        <!-- اسم التطبيق -->
-        <h1 id="appName" style="color: white; font-size: 55px; font-weight: bold; letter-spacing: 5px; margin-bottom: 20px;">الحقني</h1>
-        <div style="width: 60%; height: 3px; background: white; margin-bottom: 30px;"></div>
-
-        <p style="color: #BBDEFB; font-size: 22px; font-weight: bold;">مشكلتك خليها علينا</p>
-        <p style="color: rgba(255,255,255,0.8); margin-top: 10px;">..... خدمة مساعدة الشاحنات والسيارات</p>
-
-        <div style="display: flex; gap: 30px; margin: 30px 0;">
-            <i class="fas fa-car" style="font-size: 32px; color: #BBDEFB;"></i>
-            <i class="fas fa-truck" style="font-size: 32px; color: #BBDEFB;"></i>
-            <i class="fas fa-motorcycle" style="font-size: 32px; color: #BBDEFB;"></i>
-        </div>
-
-        <button id="startBtn" style="background: white; color: #0D47A1; border: none; padding: 15px 50px; border-radius: 40px; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 30px;">ابدأ</button>
-    </div>
-</div>
-
-<!-- شاشة تسجيل الدخول -->
-<div id="loginScreen" class="screen">
-    <div style="min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px;">
-        <div style="background: white; border-radius: 30px; padding: 30px 25px; max-width: 450px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
-            <div style="text-align: center;">
-                <i id="loginIcon" class="fas fa-lock" style="font-size: 50px; color: #1E3A8A;"></i>
-                <h2 id="loginTitle" style="margin: 15px 0;">تسجيل الدخول</h2>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-flex">
+            <div class="logo">
+                <i class="fas fa-truck-ramp-box"></i>
+                <span>الحقني</span>
             </div>
-
-            <div style="margin-bottom: 15px;">
-                <input type="email" id="emailInput" placeholder="البريد الإلكتروني" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ddd; font-family: inherit; text-align: right;">
+            <div class="mobile-menu" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
             </div>
-            <div style="margin-bottom: 15px;">
-                <input type="password" id="passwordInput" placeholder="كلمة المرور" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ddd; font-family: inherit; text-align: right;">
-            </div>
-            <div id="confirmPasswordDiv" style="margin-bottom: 15px; display: none;">
-                <input type="password" id="confirmPasswordInput" placeholder="تأكيد كلمة المرور" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ddd; font-family: inherit; text-align: right;">
-            </div>
-
-            <button id="authBtn" style="width: 100%; background: #1E3A8A; color: white; padding: 14px; border-radius: 12px; border: none; font-size: 18px; font-weight: bold; cursor: pointer; margin-bottom: 15px;">دخول</button>
-
-            <div style="text-align: center;">
-                <a href="#" id="forgotPasswordLink" style="color: #1E3A8A; text-decoration: none; font-size: 14px;">نسيت كلمة السر؟</a>
-            </div>
-
-            <div style="text-align: center; margin-top: 20px;">
-                <span id="toggleModeText">ليس لديك حساب؟ أنشئ واحداً</span>
+            <div class="nav-links" id="navLinks">
+                <a href="#">الرئيسية</a>
+                <a href="#services">الخدمات</a>
+                <a href="#about">عن التطبيق</a>
+                <a href="#contact">تواصل</a>
+                <button class="btn-outline" id="loginBtnNav" style="padding: 8px 20px;">دخول</button>
             </div>
         </div>
     </div>
-</div>
+</nav>
 
-<!-- الشاشة الرئيسية (Home) -->
-<div id="homeScreen" class="screen">
-    <div style="background: #1A237E; padding: 50px 16px 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <i class="fas fa-bars" id="menuIcon" style="color: white; font-size: 28px; cursor: pointer;"></i>
-            <div><i class="fas fa-truck" style="color: #FFC107; font-size: 30px;"></i><span style="color: white; font-size: 24px; font-weight: bold; margin-right: 8px;">الحقني</span></div>
-            <div style="width: 40px;"></div>
-        </div>
-    </div>
-    <div style="background: white; border-radius: 30px 30px 0 0; min-height: 80vh; padding: 30px 20px;">
-        <div id="mainContent">
-            <!-- البطاقات الرئيسية -->
-            <div class="card-3d" data-service="equipped" style="background: #00897B; border-radius: 24px; padding: 25px; margin-bottom: 20px; color: white; display: flex; justify-content: space-between; align-items: center;">
-                <div><i class="fas fa-truck-moving" style="font-size: 50px;"></i></div>
-                <div style="text-align: center;"><h2>شاحنة مجهزة</h2><p>شاحنة إنقاذ مجهزة بكامل المعدات</p></div>
-            </div>
-            <div class="card-3d" data-service="depannage" style="background: #E65100; border-radius: 24px; padding: 25px; margin-bottom: 20px; color: white; display: flex; justify-content: space-between; align-items: center;">
-                <div><i class="fas fa-fire-extinguisher" style="font-size: 50px;"></i></div>
-                <div style="text-align: center;"><h2>ديبناج</h2><p>شاحنة رفع - نرفع سيارتك أينما تعطلت</p></div>
-            </div>
-            <div class="card-3d" data-service="repair" style="background: #3949AB; border-radius: 24px; padding: 25px; margin-bottom: 20px; color: white; display: flex; justify-content: space-between; align-items: center;">
-                <div><i class="fas fa-wrench" style="font-size: 50px;"></i></div>
-                <div style="text-align: center;"><h2>ورشات تصليح</h2><p>أقرب ورشات التصليح حولك</p></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- شريط سفلي -->
-    <div class="bottom-nav" id="bottomNav">
-        <div class="nav-item active" data-nav="home"><i class="fas fa-home"></i><span>الرئيسية</span></div>
-        <div class="nav-item" data-nav="requests"><i class="fas fa-list-alt"></i><span>طلباتي</span></div>
-        <div class="nav-item" data-nav="profile"><i class="fas fa-user"></i><span>حسابي</span></div>
-    </div>
-</div>
-
-<!-- شاشة المزيد (MorePage) -->
-<div id="moreScreen" class="screen">
-    <div style="background: linear-gradient(135deg, #0A1172, #0D47A1); min-height: 100vh;">
-        <div style="padding: 20px;">
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                <i class="fas fa-arrow-right" id="closeMoreBtn" style="color: white; font-size: 28px; cursor: pointer;"></i>
-                <h2 style="color: white;">المزيد</h2>
-            </div>
-            <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 20px;">
-                <h3 style="color: #BBDEFB;">عن التطبيق</h3>
-                <p style="color: white;">تطبيق "الحقني" هو تطبيق خدمي يهدف إلى تقديم المساعدة السريعة لأصحاب الشاحنات والسيارات عند تعطلهم.</p>
-            </div>
-            <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 20px;">
-                <h3 style="color: #BBDEFB;">مميزات التطبيق</h3>
-                <ul style="color: white; list-style: none;">
-                    <li><i class="fas fa-check-circle"></i> تحديد الموقع بدقة</li>
-                    <li><i class="fas fa-wrench"></i> خدمة الصيانة</li>
-                    <li><i class="fas fa-truck"></i> خدمة ديبناج</li>
-                    <li><i class="fas fa-phone"></i> دعم 24 ساعة</li>
-                </ul>
-            </div>
-            <div style="background: rgba(76,175,80,0.2); border-radius: 20px; padding: 20px; border: 1px solid #4CAF50;">
-                <h3 style="color: #8BC34A;">👨‍💻 المطورون</h3>
-                <p style="color: white;">دماني نعيمة<br>بلعدل فاطيمة</p>
-                <div style="display: flex; justify-content: center; margin-top: 10px;">
-                    <a href="mailto:fullvixxx@gmail.com" style="color: white; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 30px; text-decoration: none;"><i class="fas fa-envelope"></i> fullvixxx@gmail.com</a>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-grid">
+            <div data-aos="fade-up">
+                <div class="hero-badge">✨ خدمة النجدة على الطريق</div>
+                <h1 class="hero-title">مشكلتك <span>خليها علينا</span><br>نحن نأتيك أينما كنت</h1>
+                <p class="hero-desc">أول منصة جزائرية متخصصة في تقديم المساعدة السريعة للشاحنات والسيارات. ميكانيكيون، وقود، ديبناج، وقطع غيار في أقرب وقت.</p>
+                <button class="btn-primary" id="requestHelpBtn"><i class="fas fa-headset"></i> اطلب المساعدة الآن</button>
+                <div class="hero-stats">
+                    <div class="stat"><h3>+1500</h3><p>طلب منجز</p></div>
+                    <div class="stat"><h3>+120</h3><p>فني محترف</p></div>
+                    <div class="stat"><h3>24/7</h3><p>خدمة طوارئ</p></div>
                 </div>
             </div>
-            <div class="bouncing-ball" style="text-align: center; margin-top: 30px;">
-                <div style="width: 60px; height: 60px; background: radial-gradient(circle, #FF9800, #E65100); border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center;"><i class="fas fa-question" style="color: white; font-size: 30px;"></i></div>
+            <div class="hero-image" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600&h=500&fit=crop" alt="مساعدة شاحنة">
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<!-- نافذة منبثقة للخدمات (شاحنة مجهزة - اختيار الخدمة) -->
-<div id="equippedDialog" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 300; justify-content: center; align-items: center;">
-    <div style="background: white; border-radius: 30px; width: 85%; max-width: 400px; padding: 20px;">
-        <h3 style="text-align: center;">اختر الخدمة</h3>
-        <div class="service-option" data-type="mechanic" style="padding: 15px; border-bottom: 1px solid #eee; cursor: pointer;"><i class="fas fa-wrench"></i> ميكانيكي</div>
-        <div class="service-option" data-type="fuel" style="padding: 15px; border-bottom: 1px solid #eee; cursor: pointer;"><i class="fas fa-gas-pump"></i> وقود</div>
-        <div class="service-option" data-type="oil" style="padding: 15px; border-bottom: 1px solid #eee; cursor: pointer;"><i class="fas fa-oil-can"></i> زيوت</div>
-        <div class="service-option" data-type="spare" style="padding: 15px; cursor: pointer;"><i class="fas fa-cogs"></i> قطع غيار</div>
-        <button id="closeDialog" style="margin-top: 15px; width: 100%; padding: 10px; background: #ccc; border: none; border-radius: 12px;">إلغاء</button>
-    </div>
-</div>
-
-<!-- نافذة تقديم طلب عامة -->
-<div id="requestFormDialog" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 400; overflow-y: auto; justify-content: center; align-items: center;">
-    <div style="background: white; border-radius: 30px; width: 90%; max-width: 450px; padding: 25px; margin: 20px auto;">
-        <h3 id="formTitle" style="text-align: center;">طلب ميكانيكي</h3>
-        <textarea id="formInfo" placeholder="تفاصيل المشكلة / الطلب" rows="3" style="width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ccc; margin: 10px 0; text-align: right;"></textarea>
-        <input type="text" id="formContact" placeholder="رقم الهاتف" style="width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ccc; margin: 10px 0; text-align: right;">
-        <div style="display: flex; gap: 10px; align-items: center;">
-            <input type="text" id="formLocation" placeholder="الموقع (GPS)" style="flex: 1; padding: 10px; border-radius: 12px; border: 1px solid #ccc; text-align: right;">
-            <div class="location-btn" id="getLocationBtn"><i class="fas fa-map-marker-alt" style="font-size: 24px; color: #1A237E;"></i></div>
+<!-- Services Section -->
+<section id="services" class="section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">خدماتنا المتكاملة</h2>
+        <p class="section-sub" data-aos="fade-up">فريق متخصص على مدار الساعة لتلبية احتياجاتك على الطريق</p>
+        <div class="services-grid">
+            <div class="service-card" data-aos="zoom-in">
+                <div class="service-icon"><i class="fas fa-wrench"></i></div>
+                <h3>ميكانيكيون متنقلون</h3>
+                <p>فريق ميكانيكي متخصص يصل إلى موقعك لإصلاح سيارتك في الحال.</p>
+                <button class="service-btn" data-service="mechanic" style="margin-top:20px; background:none; color:#1e3a8a; font-weight:bold; cursor:pointer;">طلب ميكانيكي →</button>
+            </div>
+            <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="service-icon"><i class="fas fa-gas-pump"></i></div>
+                <h3>توصيل الوقود</h3>
+                <p>نفذ الوقود؟ نوصله لك أينما كنت في أسرع وقت.</p>
+                <button class="service-btn" data-service="fuel" style="margin-top:20px; background:none; color:#1e3a8a; font-weight:bold; cursor:pointer;">طلب وقود →</button>
+            </div>
+            <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="service-icon"><i class="fas fa-truck"></i></div>
+                <h3>ديبناج (شاحنة رفع)</h3>
+                <p>نقل سيارتك إلى أقرب مركز صيانة بواسطة شاحنة رفع حديثة.</p>
+                <button class="service-btn" data-service="depannage" style="margin-top:20px; background:none; color:#1e3a8a; font-weight:bold; cursor:pointer;">طلب ديبناج →</button>
+            </div>
+            <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+                <div class="service-icon"><i class="fas fa-oil-can"></i></div>
+                <h3>زيوت وقطع غيار</h3>
+                <p>نوفر لك الزيوت الأصلية وقطع الغيار اللازمة أينما كنت.</p>
+                <button class="service-btn" data-service="spare" style="margin-top:20px; background:none; color:#1e3a8a; font-weight:bold; cursor:pointer;">طلب قطع →</button>
+            </div>
         </div>
-        <button id="submitRequestBtn" style="background: #1A237E; color: white; width: 100%; padding: 12px; border-radius: 30px; border: none; margin-top: 20px; font-weight: bold;">إرسال الطلب</button>
-        <button id="closeFormDialog" style="background: #ccc; width: 100%; padding: 10px; border-radius: 30px; border: none; margin-top: 10px;">إلغاء</button>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="about" class="section" style="background: #f1f5f9;">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">لماذا تختار الحقني؟</h2>
+        <div class="features-grid">
+            <div class="feature-item" data-aos="fade-right">
+                <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div><h3>تحديد الموقع بدقة</h3><p>نصل إليك عبر GPS بدقة متناهية لتقديم المساعدة السريعة.</p></div>
+            </div>
+            <div class="feature-item" data-aos="fade-right" data-aos-delay="100">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <div><h3>خدمة 24/7</h3><p>طوال أيام الأسبوع، فريق جاهز للاستجابة لنداءاتك.</p></div>
+            </div>
+            <div class="feature-item" data-aos="fade-right" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <div><h3>فنيون معتمدون</h3><p>كل الميكانيكيين لديهم خبرة عالية وضمان الجودة.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+    <div class="container">
+        <div class="cta" data-aos="flip-up">
+            <h2>جاهز لطلب المساعدة؟</h2>
+            <p>فريقنا ينتظر اتصالك، فقط اضغط على الزر وحدد الخدمة التي تحتاجها</p>
+            <button class="btn-primary" id="ctaBtn" style="background:white; color:#1e3a8a;"><i class="fas fa-phone-alt"></i> اطلب النجدة الآن</button>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>الحقني</h4>
+                <p>منصة متخصصة في خدمات الطوارئ على الطريق للشاحنات والسيارات في الجزائر.</p>
+            </div>
+            <div class="footer-col">
+                <h4>روابط سريعة</h4>
+                <a href="#">الرئيسية</a>
+                <a href="#services">الخدمات</a>
+                <a href="#about">من نحن</a>
+            </div>
+            <div class="footer-col">
+                <h4>تواصل معنا</h4>
+                <a href="mailto:fullvixxx@gmail.com"><i class="fas fa-envelope"></i> fullvixxx@gmail.com</a>
+                <a href="#"><i class="fas fa-phone"></i> +213 555 123 456</a>
+            </div>
+            <div class="footer-col">
+                <h4>تابعنا</h4>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 الحقني - جميع الحقوق محفوظة | تصميم جزائري 100%</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal طلب الخدمة -->
+<div id="requestModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3 id="modalTitle" style="margin-bottom: 20px;">طلب خدمة</h3>
+        <input type="text" id="fullName" placeholder="الاسم الكامل" required>
+        <input type="tel" id="phoneNumber" placeholder="رقم الهاتف" required>
+        <textarea id="problemDesc" rows="3" placeholder="وصف المشكلة بالتفصيل"></textarea>
+        <div style="display: flex; gap: 8px;">
+            <input type="text" id="locationInput" placeholder="موقعك (GPS أو عنوان)" style="flex:1">
+            <button id="getLocationBtn" style="background:#e2e8f0; border:none; border-radius:16px; padding:0 16px;"><i class="fas fa-location-dot"></i></button>
+        </div>
+        <select id="serviceTypeSelect" style="margin-top:12px;">
+            <option value="mechanic">ميكانيكي متنقل</option>
+            <option value="fuel">توصيل وقود</option>
+            <option value="depannage">ديبناج (رفع)</option>
+            <option value="spare">قطع غيار / زيوت</option>
+        </select>
+        <button id="submitRequestModal" style="background:#1e3a8a; color:white; width:100%; padding:12px; border-radius:50px; margin-top:20px; font-weight:bold; border:none;">إرسال الطلب</button>
+        <p style="font-size:12px; color:#64748b; text-align:center; margin-top:12px;">سيتم التواصل معك خلال 5 دقائق</p>
     </div>
 </div>
 
-<div id="toastMsg" class="toast-message"></div>
-
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    // حالة التطبيق
-    let currentUser = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null;
-    let requests = JSON.parse(localStorage.getItem('requests') || '[]');
-    let isDarkMode = localStorage.getItem('darkMode') === 'true';
-    let selectedServiceType = '';
+    AOS.init({ duration: 800, once: true });
 
-    // دوال مساعدة
-    function showToast(msg, isError = false) {
-        const toast = document.getElementById('toastMsg');
-        toast.textContent = msg;
-        toast.style.background = isError ? '#d32f2f' : '#2e7d32';
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    // Modal elements
+    const modal = document.getElementById('requestModal');
+    const closeModal = document.querySelector('.close-modal');
+    const requestBtns = document.querySelectorAll('#requestHelpBtn, #ctaBtn, .service-btn');
+    const modalTitle = document.getElementById('modalTitle');
+    const serviceSelect = document.getElementById('serviceTypeSelect');
+    let currentService = 'mechanic';
+
+    function openModal(service = 'mechanic') {
+        modal.style.display = 'flex';
+        currentService = service;
+        let titleText = '';
+        switch(service) {
+            case 'mechanic': titleText = 'طلب ميكانيكي متنقل'; break;
+            case 'fuel': titleText = 'طلب توصيل وقود'; break;
+            case 'depannage': titleText = 'طلب ديبناج (شاحنة رفع)'; break;
+            case 'spare': titleText = 'طلب قطع غيار / زيوت'; break;
+            default: titleText = 'طلب خدمة';
+        }
+        modalTitle.innerText = titleText;
+        if(serviceSelect) serviceSelect.value = service;
     }
 
-    function showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-    }
+    requestBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const service = btn.getAttribute('data-service');
+            if(service) openModal(service);
+            else openModal('mechanic');
+        });
+    });
 
-    // محاكاة تحديد الموقع
-    function getCurrentLocation(callback) {
-        if (navigator.geolocation) {
+    closeModal.onclick = () => modal.style.display = 'none';
+    window.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+
+    // Fake location
+    document.getElementById('getLocationBtn')?.addEventListener('click', () => {
+        if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                (pos) => { callback(`${pos.coords.latitude}, ${pos.coords.longitude}`); },
-                () => { showToast('لم نتمكن من تحديد موقعك', true); callback(''); }
+                pos => document.getElementById('locationInput').value = `${pos.coords.latitude}, ${pos.coords.longitude}`,
+                () => alert('تعذر تحديد الموقع، الرجاء إدخاله يدوياً')
             );
-        } else { showToast('المتصفح لا يدعم تحديد الموقع', true); callback(''); }
-    }
+        } else alert('المتصفح لا يدعم خاصية الموقع');
+    });
 
-    // إضافة طلب
-    function addRequest(type, info, contact, location) {
-        if (!currentUser) { showToast('الرجاء تسجيل الدخول أولاً', true); return false; }
+    // Submit Request with toast & store in localStorage
+    const submitBtn = document.getElementById('submitRequestModal');
+    submitBtn?.addEventListener('click', () => {
+        const name = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phoneNumber').value.trim();
+        const problem = document.getElementById('problemDesc').value.trim();
+        const location = document.getElementById('locationInput').value.trim();
+        const service = serviceSelect ? serviceSelect.value : currentService;
+
+        if(!name || !phone || !location) {
+            alert('يرجى ملء الاسم، رقم الهاتف والموقع');
+            return;
+        }
+
+        // Save to localStorage
+        const requests = JSON.parse(localStorage.getItem('website_requests') || '[]');
         const newReq = {
             id: Date.now(),
-            userId: currentUser.email,
-            type: type,
-            info: info,
-            contact: contact,
-            location: location,
-            status: 'pending',
-            createdAt: new Date().toISOString()
+            name, phone, problem, location, service,
+            status: 'قيد الانتظار',
+            date: new Date().toLocaleString('ar')
         };
         requests.push(newReq);
-        localStorage.setItem('requests', JSON.stringify(requests));
-        showToast('تم إرسال الطلب بنجاح');
-        return true;
-    }
+        localStorage.setItem('website_requests', JSON.stringify(requests));
 
-    // عرض طلباتي
-    function renderMyRequests() {
-        const container = document.getElementById('requestsList');
-        if (!container) return;
-        const userReqs = requests.filter(r => r.userId === currentUser?.email);
-        if (userReqs.length === 0) { container.innerHTML = '<p style="text-align:center;">لا توجد طلبات بعد</p>'; return; }
-        container.innerHTML = userReqs.map(req => `
-            <div style="background: #f5f5f5; border-radius: 15px; padding: 15px; margin-bottom: 10px;">
-                <div style="display: flex; justify-content: space-between;"><strong>${req.type === 'mechanic' ? 'ميكانيكي' : req.type === 'fuel' ? 'وقود' : req.type === 'oil' ? 'زيوت' : req.type === 'spare' ? 'قطع غيار' : 'ديبناج/ورشة'}</strong> <span style="color: ${req.status === 'pending' ? 'orange' : 'green'}">${req.status === 'pending' ? 'قيد الانتظار' : 'مكتمل'}</span></div>
-                <div>📍 ${req.location}</div>
-                <div>📞 ${req.contact}</div>
-                <div style="font-size:12px; color:gray;">${new Date(req.createdAt).toLocaleString('ar')}</div>
-            </div>
-        `).join('');
-    }
+        alert(`✅ تم استلام طلبك بنجاح!\nالخدمة: ${service}\nسيتم الاتصال بك قريباً على ${phone}`);
+        modal.style.display = 'none';
+        document.getElementById('fullName').value = '';
+        document.getElementById('phoneNumber').value = '';
+        document.getElementById('problemDesc').value = '';
+        document.getElementById('locationInput').value = '';
+    });
 
-    function renderProfile() {
-        const container = document.getElementById('profileInfo');
-        if (!container) return;
-        if (currentUser) {
-            container.innerHTML = `
-                <div style="text-align:center;"><i class="fas fa-user-circle" style="font-size: 80px; color:#1A237E;"></i></div>
-                <div style="background:white; border-radius:20px; padding:20px; margin-top:20px;">
-                    <p><strong>البريد:</strong> ${currentUser.email}</p>
-                    <p><strong>الاسم:</strong> ${currentUser.fullName || 'غير محدد'}</p>
-                    <p><strong>الهاتف:</strong> ${currentUser.phone || 'غير محدد'}</p>
-                </div>
-                <button id="editProfileBtn" style="background:#1A237E; color:white; width:100%; padding:12px; border-radius:30px; margin-top:15px;">تعديل الملف الشخصي</button>
-                <button id="logoutBtn" style="background:#d32f2f; color:white; width:100%; padding:12px; border-radius:30px; margin-top:10px;">تسجيل خروج</button>
-            `;
-            document.getElementById('editProfileBtn')?.addEventListener('click', () => {
-                const newName = prompt('الاسم الكامل', currentUser.fullName || '');
-                const newPhone = prompt('رقم الهاتف', currentUser.phone || '');
-                if (newName !== null) currentUser.fullName = newName;
-                if (newPhone !== null) currentUser.phone = newPhone;
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                renderProfile();
-                showToast('تم تحديث البيانات');
-            });
-            document.getElementById('logoutBtn')?.addEventListener('click', () => {
-                currentUser = null;
-                localStorage.removeItem('currentUser');
-                showScreen('loginScreen');
-            });
-        } else { container.innerHTML = '<p style="text-align:center;">الرجاء تسجيل الدخول</p>'; }
-    }
+    // Mobile Menu Toggle
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const navLinksDiv = document.getElementById('navLinks');
+    menuBtn?.addEventListener('click', () => {
+        navLinksDiv.classList.toggle('active');
+    });
 
-    // بناء شاشة الطلبات والحساب
-    function buildRequestsScreen() {
-        const requestsHtml = `<div style="background:white; min-height:100vh; padding:20px;"><h2>طلباتي</h2><div id="requestsList"></div></div>`;
-        document.getElementById('requestsScreenContent').innerHTML = requestsHtml;
-        renderMyRequests();
-    }
+    // Login simulation
+    const loginBtn = document.getElementById('loginBtnNav');
+    loginBtn?.addEventListener('click', () => {
+        alert('🔐 خاصية تسجيل الدخول قيد التطوير (للتوضيح فقط)\nيمكنك تجربة طلب الخدمة كزائر.');
+    });
 
-    function buildProfileScreen() {
-        const profileHtml = `<div style="background:white; min-height:100vh; padding:20px;"><h2>حسابي</h2><div id="profileInfo"></div></div>`;
-        document.getElementById('profileScreenContent').innerHTML = profileHtml;
-        renderProfile();
-    }
-
-    // تهيئة التنقل الداخلي
-    function initNavigation() {
-        document.querySelectorAll('[data-nav]').forEach(el => {
-            el.addEventListener('click', (e) => {
-                const nav = e.currentTarget.getAttribute('data-nav');
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                el.classList.add('active');
-                if (nav === 'home') { document.getElementById('mainContent').style.display = 'block'; document.getElementById('requestsScreenContent').style.display = 'none'; document.getElementById('profileScreenContent').style.display = 'none'; }
-                else if (nav === 'requests') { document.getElementById('mainContent').style.display = 'none'; document.getElementById('requestsScreenContent').style.display = 'block'; document.getElementById('profileScreenContent').style.display = 'none'; buildRequestsScreen(); }
-                else if (nav === 'profile') { document.getElementById('mainContent').style.display = 'none'; document.getElementById('requestsScreenContent').style.display = 'none'; document.getElementById('profileScreenContent').style.display = 'block'; buildProfileScreen(); }
-            });
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target) target.scrollIntoView({ behavior: 'smooth' });
+            if(navLinksDiv.classList.contains('active')) navLinksDiv.classList.remove('active');
         });
-    }
-
-    // ربط أحداث الخدمات
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('[data-service]')) {
-            const service = e.target.closest('[data-service]').getAttribute('data-service');
-            if (service === 'equipped') { document.getElementById('equippedDialog').style.display = 'flex'; }
-            else if (service === 'depannage') { selectedServiceType = 'depannage'; document.getElementById('formTitle').innerText = 'طلب ديبناج'; document.getElementById('requestFormDialog').style.display = 'flex'; }
-            else if (service === 'repair') { selectedServiceType = 'repair'; document.getElementById('formTitle').innerText = 'طلب ورشة تصليح'; document.getElementById('requestFormDialog').style.display = 'flex'; }
-        }
-        if (e.target.closest('.service-option')) {
-            const type = e.target.closest('.service-option').getAttribute('data-type');
-            selectedServiceType = type;
-            let title = '';
-            if (type === 'mechanic') title = 'طلب ميكانيكي';
-            else if (type === 'fuel') title = 'طلب وقود';
-            else if (type === 'oil') title = 'طلب زيوت';
-            else title = 'طلب قطع غيار';
-            document.getElementById('formTitle').innerText = title;
-            document.getElementById('equippedDialog').style.display = 'none';
-            document.getElementById('requestFormDialog').style.display = 'flex';
-        }
     });
-
-    document.getElementById('closeDialog')?.addEventListener('click', () => { document.getElementById('equippedDialog').style.display = 'none'; });
-    document.getElementById('closeFormDialog')?.addEventListener('click', () => { document.getElementById('requestFormDialog').style.display = 'none'; });
-    document.getElementById('getLocationBtn')?.addEventListener('click', () => {
-        getCurrentLocation((loc) => { if (loc) document.getElementById('formLocation').value = loc; });
-    });
-    document.getElementById('submitRequestBtn')?.addEventListener('click', () => {
-        const info = document.getElementById('formInfo').value;
-        const contact = document.getElementById('formContact').value;
-        const location = document.getElementById('formLocation').value;
-        if (!info || !contact || !location) { showToast('يرجى ملء جميع الحقول', true); return; }
-        if (addRequest(selectedServiceType, info, contact, location)) {
-            document.getElementById('requestFormDialog').style.display = 'none';
-            document.getElementById('formInfo').value = '';
-            document.getElementById('formContact').value = '';
-            document.getElementById('formLocation').value = '';
-        }
-    });
-
-    // تسجيل الدخول
-    document.getElementById('authBtn')?.addEventListener('click', () => {
-        const email = document.getElementById('emailInput').value;
-        const pass = document.getElementById('passwordInput').value;
-        const isLogin = document.getElementById('loginTitle').innerText === 'تسجيل الدخول';
-        if (isLogin) {
-            if (email === 'test@example.com' && pass === '123456') {
-                currentUser = { email: email, fullName: 'مستخدم تجريبي', phone: '0555555555' };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                showToast('تم تسجيل الدخول بنجاح');
-                showScreen('homeScreen');
-            } else { showToast('بيانات غير صحيحة (test@example.com / 123456)', true); }
-        } else {
-            const confirm = document.getElementById('confirmPasswordInput').value;
-            if (pass !== confirm) { showToast('كلمة المرور غير متطابقة', true); return; }
-            currentUser = { email: email, fullName: '', phone: '' };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            showToast('تم إنشاء الحساب بنجاح');
-            showScreen('homeScreen');
-        }
-    });
-
-    document.getElementById('toggleModeText')?.addEventListener('click', () => {
-        const isLogin = document.getElementById('loginTitle').innerText === 'تسجيل الدخول';
-        if (isLogin) {
-            document.getElementById('loginTitle').innerText = 'إنشاء حساب جديد';
-            document.getElementById('authBtn').innerText = 'تسجيل';
-            document.getElementById('confirmPasswordDiv').style.display = 'block';
-            document.getElementById('toggleModeText').innerText = 'لديك حساب بالفعل؟ سجل دخولك';
-            document.getElementById('loginIcon').className = 'fas fa-user-plus';
-        } else {
-            document.getElementById('loginTitle').innerText = 'تسجيل الدخول';
-            document.getElementById('authBtn').innerText = 'دخول';
-            document.getElementById('confirmPasswordDiv').style.display = 'none';
-            document.getElementById('toggleModeText').innerText = 'ليس لديك حساب؟ أنشئ واحداً';
-            document.getElementById('loginIcon').className = 'fas fa-lock';
-        }
-    });
-
-    document.getElementById('forgotPasswordLink')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast('تم إرسال رمز استعادة إلى بريدك (محاكاة)');
-    });
-
-    document.getElementById('startBtn')?.addEventListener('click', () => { showScreen('loginScreen'); });
-    document.getElementById('menuIcon')?.addEventListener('click', () => { document.getElementById('moreScreen').classList.add('active'); document.getElementById('homeScreen').classList.remove('active'); });
-    document.getElementById('closeMoreBtn')?.addEventListener('click', () => { showScreen('homeScreen'); });
-    document.getElementById('moreSideBtn')?.addEventListener('click', () => { showScreen('moreScreen'); });
-
-    // إضافة محتوى الشاشات الفرعية
-    const homeScreenDiv = document.getElementById('homeScreen');
-    const requestsDiv = document.createElement('div'); requestsDiv.id = 'requestsScreenContent'; requestsDiv.style.display = 'none'; requestsDiv.style.background = 'white'; requestsDiv.style.minHeight = '80vh'; requestsDiv.style.padding = '20px';
-    const profileDiv = document.createElement('div'); profileDiv.id = 'profileScreenContent'; profileDiv.style.display = 'none'; profileDiv.style.background = 'white'; profileDiv.style.minHeight = '80vh'; profileDiv.style.padding = '20px';
-    homeScreenDiv.appendChild(requestsDiv);
-    homeScreenDiv.appendChild(profileDiv);
-    initNavigation();
-
-    // تأثير كتابة اسم التطبيق
-    const appNameEl = document.getElementById('appName');
-    if (appNameEl) {
-        const fullText = 'الحقني';
-        let i = 0;
-        appNameEl.innerText = '';
-        function typeWriter() { if (i < fullText.length) { appNameEl.innerText += fullText.charAt(i); i++; setTimeout(typeWriter, 150); } }
-        typeWriter();
-    }
-
-    // تحقق إذا كان المستخدم مسجل
-    if (currentUser) showScreen('homeScreen');
-    else showScreen('splashScreen');
-
-    // أنيميشن CSS إضافية
-    const style = document.createElement('style');
-    style.textContent = `@keyframes pulse { 0% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0.6; transform: scale(1); } } @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`;
-    document.head.appendChild(style);
 </script>
-
 </body>
 </html>
